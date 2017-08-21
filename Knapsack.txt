@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int max(int a,int b){
+    if(a>b){
+        return a;
+    }else{
+        return b;
+    }
+}
+
+int main(){
+    int W,N;
+    scanf("%d %d\n",&W,&N);
+    int i;
+    int* v=(int *)malloc(N*sizeof(int));
+    int* w=(int *)malloc(N*sizeof(int));
+    for(i=0;i<N;i++){
+        scanf("%d %d\n",&v[i],&w[i]);
+    }
+    int* M=(int*)malloc((W+1)*sizeof(int));
+    int j;
+    for(i=0;i<N+1;i++){
+        M[i]=0;
+    }
+    int* T=(int *)malloc((W+1)*sizeof(int));
+    for(i=1;i<N+1;i++){
+        for(j=0;j<W+1;j++){
+            if(w[i-1]>j){
+                T[j]=M[j];
+            }else{
+                T[j]=max(M[j],M[j-w[i-1]]+v[i-1]);
+            }
+            //printf("%d ",T[j]);
+        }//printf("\n");
+        for(j=0;j<W+1;j++){
+            M[j]=T[j];
+        }
+    }
+    printf("%d\n",M[W]);
+    return 0;
+}
